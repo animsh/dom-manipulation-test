@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dom Manipulation</title>
+  </head>
+  <body>
+    <script>
+      function populateDiv() {
+        const firstNumber = document.getElementById("first-number").value;
+        const secondNumber = document.getElementById("second-number").value;
+        if (!firstNumber || !secondNumber) {
+          document.getElementById("final-sum").innerHTML =
+            "Enter valid number!";
+          return;
+        }
+        document.getElementById("final-sum").innerHTML = `Sum is ${
+          parseInt(firstNumber) + parseInt(secondNumber)
+        }`;
+      }
+    </script>
+    <input
+      type="number"
+      name="first-number"
+      id="first-number"
+      placeholder="First Number"
+    />
+    <br />
+    <br />
+    <input
+      type="number"
+      name="second-number"
+      id="second-number"
+      placeholder="Second Number"
+    />
+    <br />
+    <br />
+    <button onclick="populateDiv()">Calculate Sum</button>
+    <br />
+    <br />
+    <div id="final-sum"></div>
+  </body>
+</html>
