@@ -7,20 +7,32 @@
   </head>
   <body>
     <script>
+      let timeout;
+
+      function debouncePopulateDiv() {
+        clearTimeout(timeout);
+        timeout = setInterval(populateDiv, 1000);
+      }
+
       function populateDiv() {
-        const firstNumber = document.getElementById("first-number").value;
-        const secondNumber = document.getElementById("second-number").value;
+        document.getElementById("final-sum").innerHTML = "Calling backend!";
+        let firstNumber = document.getElementById("first-number").value;
+        let secondNumber = document.getElementById("second-number").value;
         if (!firstNumber || !secondNumber) {
           document.getElementById("final-sum").innerHTML =
             "Enter valid number!";
           return;
         }
-        document.getElementById("final-sum").innerHTML = `Sum is ${
-          parseInt(firstNumber) + parseInt(secondNumber)
-        }`;
+
+        firstNumber = parseInt(firstNumber);
+        secondNumber = parseInt(secondNumber);
+
+        document.getElementById("final-sum").innerHTML =
+          firstNumber + secondNumber;
       }
     </script>
     <input
+      oninput="debouncePopulateDiv()"
       type="number"
       name="first-number"
       id="first-number"
@@ -29,14 +41,12 @@
     <br />
     <br />
     <input
+      oninput="debouncePopulateDiv()"
       type="number"
       name="second-number"
       id="second-number"
       placeholder="Second Number"
     />
-    <br />
-    <br />
-    <button onclick="populateDiv()">Calculate Sum</button>
     <br />
     <br />
     <div id="final-sum"></div>
