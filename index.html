@@ -3,52 +3,58 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dom Manipulation</title>
-  </head>
-  <body>
-    <script>
-      let timeout;
-
-      function debouncePopulateDiv() {
-        clearTimeout(timeout);
-        timeout = setInterval(populateDiv, 1000);
+    <title>Dom Manipulation -Todo App</title>
+    <style>
+      input {
+        display: block;
+        margin-bottom: 1rem;
       }
 
-      function populateDiv() {
-        document.getElementById("final-sum").innerHTML = "Calling backend!";
-        let firstNumber = document.getElementById("first-number").value;
-        let secondNumber = document.getElementById("second-number").value;
-        if (!firstNumber || !secondNumber) {
-          document.getElementById("final-sum").innerHTML =
-            "Enter valid number!";
+      button {
+        margin-bottom: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="text" placeholder="Title" id="title" />
+      <input type="text" placeholder="Description" id="description" />
+      <button onclick="addTodo()">Add todo</button>
+    </div>
+    <div id="todo-list"></div>
+
+    <script>
+      let id = 0;
+
+      const addTodo = () => {
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+
+        if (!title || !description) {
+          alert("Enter valid details!");
           return;
         }
 
-        firstNumber = parseInt(firstNumber);
-        secondNumber = parseInt(secondNumber);
+        const outerDiv = document.createElement("div");
+        outerDiv.setAttribute("id", id++);
 
-        document.getElementById("final-sum").innerHTML =
-          firstNumber + secondNumber;
-      }
+        const titleDiv = document.createElement("div");
+        titleDiv.innerHTML = title;
+        outerDiv.appendChild(titleDiv);
+
+        const descriptionDiv = document.createElement("div");
+        descriptionDiv.innerHTML = description;
+        outerDiv.appendChild(descriptionDiv);
+
+        const button = document.createElement("button");
+        button.innerHTML = "Mark as done";
+        button.addEventListener("click", () => {
+          button.innerHTML = "Done!";
+        });
+        outerDiv.appendChild(button);
+
+        document.getElementById("todo-list").appendChild(outerDiv);
+      };
     </script>
-    <input
-      oninput="debouncePopulateDiv()"
-      type="number"
-      name="first-number"
-      id="first-number"
-      placeholder="First Number"
-    />
-    <br />
-    <br />
-    <input
-      oninput="debouncePopulateDiv()"
-      type="number"
-      name="second-number"
-      id="second-number"
-      placeholder="Second Number"
-    />
-    <br />
-    <br />
-    <div id="final-sum"></div>
   </body>
 </html>
