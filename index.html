@@ -3,58 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dom Manipulation -Todo App</title>
-    <style>
-      input {
-        display: block;
-        margin-bottom: 1rem;
-      }
-
-      button {
-        margin-bottom: 1rem;
-      }
-    </style>
+    <title>Dom Manipulation - State and Component Under the Hood</title>
   </head>
   <body>
-    <div>
-      <input type="text" placeholder="Title" id="title" />
-      <input type="text" placeholder="Description" id="description" />
-      <button onclick="addTodo()">Add todo</button>
-    </div>
-    <div id="todo-list"></div>
+    <div id="button-container"></div>
 
     <script>
-      let id = 0;
-
-      const addTodo = () => {
-        const title = document.getElementById("title").value;
-        const description = document.getElementById("description").value;
-
-        if (!title || !description) {
-          alert("Enter valid details!");
-          return;
-        }
-
-        const outerDiv = document.createElement("div");
-        outerDiv.setAttribute("id", id++);
-
-        const titleDiv = document.createElement("div");
-        titleDiv.innerHTML = title;
-        outerDiv.appendChild(titleDiv);
-
-        const descriptionDiv = document.createElement("div");
-        descriptionDiv.innerHTML = description;
-        outerDiv.appendChild(descriptionDiv);
-
-        const button = document.createElement("button");
-        button.innerHTML = "Mark as done";
-        button.addEventListener("click", () => {
-          button.innerHTML = "Done!";
-        });
-        outerDiv.appendChild(button);
-
-        document.getElementById("todo-list").appendChild(outerDiv);
+      let state = {
+        count: 0,
       };
+
+      function onButtonPressed() {
+        state.count++;
+        buttonComponentReRender();
+      }
+
+      function buttonComponentReRender() {
+        document.getElementById("button-container").innerHTML = "";
+        const button = buttonComponent(state.count);
+        document.getElementById("button-container").appendChild(button);
+      }
+
+      function buttonComponent(count) {
+        const button = document.createElement("button");
+        button.innerHTML = `Counter ${count}`;
+        button.addEventListener("click", onButtonPressed);
+        return button;
+      }
+
+      buttonComponentReRender();
     </script>
   </body>
 </html>
